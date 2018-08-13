@@ -371,6 +371,7 @@ decrypt_assertion = function(dom, private_keys, cb) {
     }), 0);
   });
   try {
+    console.log("dom type = " + (typeof dom));
     encrypted_assertion = dom.getElementsByTagNameNS(XMLNS.SAML, 'EncryptedAssertion');
     if (encrypted_assertion.length !== 1) {
       return cb(new Error("Expected 1 EncryptedAssertion; found " + encrypted_assertion.length + "."));
@@ -399,6 +400,7 @@ decrypt_assertion = function(dom, private_keys, cb) {
     });
   } catch (error) {
     err = error;
+    console.log("dom = " + dom);
     return cb(new Error("Decrypt failed: " + (util.inspect(err))));
   }
 };
@@ -815,6 +817,7 @@ module.exports.ServiceProvider = ServiceProvider = (function() {
           }
         };
       })(this), function(result, cb_wf) {
+        console.log("result = ", result);
         _.extend(response, result);
         return cb_wf(null, response);
       }

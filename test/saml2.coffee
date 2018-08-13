@@ -186,6 +186,14 @@ describe 'saml2', ->
       it 'validates a Response signature when a signature also exists within the Assertion', ->
         assert.notEqual null, saml2.check_saml_signature(get_test_file("good_response_twice_signed.xml"), get_test_file("test.crt"))
 
+      it 'validates a Response signature for an encryptedAssertion where the signature is un-encrypted and only in the response', ->
+        # console.log saml2.check_saml_signature get_test_file("good_response_encrypted_assertion_signed.xml"), get_test_file('test.crt')
+        assert.notEqual null, saml2.check_saml_signature get_test_file("good_response_encrypted_assertion_signed.xml"), [get_test_file('test.crt'), get_test_file('test2.crt')]
+
+        # saml2.parse_authn_response is a private function...
+        # saml2.decrypt_assertion dom_from_test_file("good_response_encrypted_assertion_signed.xml"), [get_test_file("test.pem")], (err, result) ->
+
+
     describe 'check_status_success', =>
       it 'accepts a valid success status', =>
         assert saml2.check_status_success(@good_response_dom), "Did not get 'true' for valid response."
@@ -204,9 +212,9 @@ describe 'saml2', ->
           "http://schemas.xmlsoap.org/claims/Group": [ "Test Group" ]
 
         expected =
-          email: "tuser@example.com"
-          name: "Test User"
-          group: "Test Group"
+          email : "tuser@example.com"
+          name  : "Test User"
+          group : "Test Group"
 
         assert.deepEqual saml2.pretty_assertion_attributes(test_attributes), expected
 

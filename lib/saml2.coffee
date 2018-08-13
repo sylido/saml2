@@ -256,6 +256,7 @@ decrypt_assertion = (dom, private_keys, cb) ->
   cb = _.wrap cb, (fn, err, args...) -> setTimeout (-> fn to_error(err), args...), 0
 
   try
+    console.log "dom type = #{typeof dom}"
     encrypted_assertion = dom.getElementsByTagNameNS(XMLNS.SAML, 'EncryptedAssertion')
     unless encrypted_assertion.length is 1
       return cb new Error("Expected 1 EncryptedAssertion; found #{encrypted_assertion.length}.")
@@ -276,6 +277,7 @@ decrypt_assertion = (dom, private_keys, cb) ->
         cb null, result
     , -> cb new Error("Failed to decrypt assertion with provided key(s): #{util.inspect errors}")
   catch err
+    console.log "dom = #{dom}"
     cb new Error("Decrypt failed: #{util.inspect err}")
 
 # Takes in an xml @dom of an object containing a SAML Response and returns an object containing the Destination and
@@ -597,6 +599,7 @@ module.exports.ServiceProvider =
           debug saml_response
           saml_response_abnormalized = add_namespaces_to_child_assertions(response_buffer.toString())
           saml_response = (new xmldom.DOMParser()).parseFromString(saml_response_abnormalized)
+          # console.log "\nsaml_response", saml_response
 
           try
             response = { response_header: parse_response_header(saml_response) }
@@ -629,6 +632,7 @@ module.exports.ServiceProvider =
               setImmediate cb_wf, null, parse_logout_request saml_response
 
         (result, cb_wf) ->
+          console.log "result = ", result
           _.extend response, result
           cb_wf null, response
       ], cb
