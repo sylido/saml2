@@ -721,6 +721,7 @@ module.exports.ServiceProvider =
       options = set_option_defaults options, identity_provider.shared_options, @shared_options
 
       xml = create_logout_response @entity_id, options.in_response_to, identity_provider.sso_logout_url
+      console.log "xml logout = " + xml
       zlib.deflateRaw xml, (err, deflated) =>
         return cb err if err?
         try
