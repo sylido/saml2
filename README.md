@@ -1,3 +1,9 @@
+# This is a fork of https://github.com/Clever/saml2, modified by sylido.
+
+Includes some improvements, bugfixes, formatting fixes for the main file.
+Added code from PRs that weren't approved, but were needed to make things work well.
+Added new features to support some other SAML attributes.
+
 # Maintenance Notice
 
 This library is currently in maintenance mode. Until further notice, the primary directive is to handle bug reports and security issues with this library.
@@ -6,7 +12,7 @@ Any library alternatives and suggestions can be filed under an issue.
 
 # SAML2-js
 
-## Important 
+## Important
 
 `saml2-js` is a node module that abstracts away the complexities of the SAML protocol behind an easy to use interface. It achieves this this by helping you implement a service provider for the SAML protocol. It currently does not implement the features to act as an identity provider.
 
